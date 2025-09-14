@@ -1,0 +1,181 @@
+{
+  "personal": {
+    "name": "Sushant Dhakal",
+    "initials": "SD",
+    "title": "Aspiring Systems Engineer or Mechatronics Engineer",
+    "bio": "Aspiring Systems Engineer or Robotics Engineer with a passion for understanding the intricacies of hardware and software.",
+    "ctaText": "Explore My Work"
+  },
+  "metadata": {
+    "title": "Sushant Dhakal",
+    "description": "Sushant Dhakal",
+    "keywords": ["Embedded Systems", "IoT", "Hardware Design", "Firmware", "Experience Design"]
+  },
+  "education": [
+    {
+      "id": "1",
+      "degree": "Bachelor of Science in Computer Engineering",
+      "school": "Mississippi State University",
+      "date": "2024 - 2027",
+      "description": [
+        "Relevant Courses: Data Structures, Digital Devices and Logic Design, Discrete Structures",
+        "GPA: 3.8/4.0",
+        "Dean's List recognition for academic excellence"
+      ],
+      "url": "https://www.ece.msstate.edu/"
+    },
+    {
+      "id": "2",
+      "degree": "High School Diploma in Science",
+      "school": "Kathmandu University High School",
+      "date": "2021 - 2023",
+      "description": [
+        "Relevant Courses: C programming, Physics, Calculus",
+        "Graduated with High Honors",
+        "President of Computer Science Club"
+      ],
+      "url": "https://www.kuhs.edu.np/"
+    }
+  ],
+  "experience": [
+    {
+      "id": "1",
+      "title": "Research Assistant",
+      "company": "Wireless Lab, Mississippi State University",
+      "date": "Jan 2025 - Present",
+      "description": [
+        "Working on security aspects of 5G wireless communication systems",
+        "Conducting research on network vulnerability assessment and mitigation",
+        "Developing security protocols for next-generation wireless networks"
+      ],
+      "url": "https://sites.google.com/view/msu-wireless/"
+    },
+    {
+      "id": "2",
+      "title": "Research Assistant",
+      "company": "Agriculture Autonomy Institute, Mississippi State University",
+      "date": "Sept 2024 - Present", 
+      "description": [
+        "Creating immersive lighting and interactive installations for events and festivals",
+        "Specializing in real-time audio-reactive systems across the SF Bay Area",
+        "Designing permanent installations that engage audiences through technology",
+        "Managing end-to-end project delivery from concept to implementation"
+      ],
+      "url": "https://www.robots4ag.com/"
+    },
+    {
+      "id": "3",
+      "title": "Embedded Systems Developer",
+      "company": "Space Foundation Nepal (Antarikchya Pratisthan Nepal)",
+      "date": "June 2021 - July 2023",
+      "description": [
+        "Developed embedded software for consumer electronics and IoT devices",
+        "Focused on sensor integration and real-time data processing systems",
+        "Reduced power consumption by 40% through code optimization techniques",
+        "Collaborated with hardware teams to ensure seamless software-hardware integration"
+      ],
+      "url": "https://www.antarikchya.org.np/"
+    },
+    {
+      "id": "4",
+      "title": "Satellite Research Intern",
+      "company": "Space Foundation Nepal (Antarikchya Pratisthan Nepal)",
+      "date": "July 2023 - July 2024",
+      "description": [
+        "Developed embedded software for consumer electronics and IoT devices",
+        "Focused on sensor integration and real-time data processing systems",
+        "Reduced power consumption by 40% through code optimization techniques",
+        "Collaborated with hardware teams to ensure seamless software-hardware integration"
+      ],
+      "url": "https://www.antarikchya.org.np/"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Programming Languages",
+      "description": "C/C++, Embedded C, Python, Kotlin, Bash"
+    },
+    {
+      "name": "Software Tools", 
+      "description": "Fusion 360, KiCad, Slic3r, Cura, (neo)vim, GDB, NuttX, FreeRTOS"
+    },
+    {
+      "name": "Hardware Skills",
+      "description": "Soldering, 3D printing, CNC milling, PCB integration and testing"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "Smart Garden Monitor",
+      "tech": "ESP32, LoRa, Solar Power",
+      "description": "A battery-powered IoT device that monitors soil moisture, temperature, and light levels. Features ultra-low power design with solar charging and LoRa connectivity for remote monitoring.",
+      "fullDescription": "This comprehensive IoT solution combines multiple sensors with efficient power management to create a fully autonomous garden monitoring system. The device features custom PCB design with integrated solar charging, ultra-low power microcontroller programming, and long-range wireless communication via LoRa technology. The system can operate for months without maintenance while providing real-time data to farmers and gardening enthusiasts.",
+      "image": "/api/placeholder/600/400",
+      "features": [
+        "Ultra-low power consumption (< 1mA average)",
+        "Solar charging with battery backup",
+        "LoRa connectivity up to 10km range",
+        "Soil moisture, temperature, humidity sensors",
+        "Weather-resistant enclosure IP67 rated",
+        "Over-the-air firmware updates"
+      ],
+      "technologies": ["ESP32-S3", "LoRa SX1276", "Solar Panel 6V", "Li-Ion Battery", "Custom PCB", "FreeRTOS"],
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/yourusername/smart-garden" },
+        { "label": "Demo", "url": "https://smart-garden-demo.com" }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Audio-Reactive Light Installation",
+      "tech": "STM32, WS2812B, FFT",
+      "description": "Interactive lighting installation that responds to music in real-time. Custom PCB design with high-speed audio processing and 1000+ individually addressable LEDs.",
+      "fullDescription": "A large-scale interactive art installation featuring over 1000 individually addressable LEDs that respond to music in real-time. The system performs real-time FFT analysis to extract frequency components and creates stunning visual representations of audio. Custom hardware design ensures minimal latency and maximum visual impact for live performances and events.",
+      "image": "/api/placeholder/600/400",
+      "features": [
+        "Real-time FFT audio analysis at 44.1kHz",
+        "1000+ individually addressable WS2812B LEDs",
+        "Sub-10ms audio-to-visual latency",
+        "Multiple visualization modes",
+        "DMX512 compatibility for professional lighting",
+        "Web interface for real-time control"
+      ],
+      "technologies": ["STM32F4", "WS2812B LEDs", "Audio ADC", "FFT Library", "DMX512", "React Dashboard"],
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/yourusername/audio-reactive-lights" },
+        { "label": "Video", "url": "https://youtube.com/watch?v=demo" }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Wireless Sensor Network",
+      "tech": "nRF52, Mesh Networking, BLE",
+      "description": "Self-healing mesh network of environmental sensors. Each node can operate independently while contributing to collective data gathering and network resilience.",
+      "fullDescription": "An advanced mesh networking solution that creates resilient networks of environmental sensors. Each node in the network can route data through neighboring nodes, creating redundancy and ensuring data reaches its destination even if individual nodes fail. The system automatically discovers optimal routing paths and adapts to changing network topology.",
+      "image": "/api/placeholder/600/400",
+      "features": [
+        "Self-healing mesh topology",
+        "Automatic node discovery and routing",
+        "End-to-end encryption",
+        "Battery life up to 2 years",
+        "Environmental sensing (temp, humidity, air quality)",
+        "Cloud integration via gateway nodes"
+      ],
+      "technologies": ["nRF52840", "Bluetooth Mesh", "Zephyr RTOS", "Nordic SDK", "Cloud APIs", "Mobile App"],
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/yourusername/wireless-sensor-network" },
+        { "label": "Documentation", "url": "https://sensor-network-docs.com" }
+      ]
+    }
+  ],
+  "contact": {
+    "title": "Let's Connect",
+    "description": "Interested in collaborating or discussing embedded systems projects? Let's chat!",
+    "email": "sushantdhakal07@gmail.com",
+    "social": {
+      "github": "https://github.com/sushant-XD",
+      "linkedin": "https://linkedin.com/in/sushantdhakal41"
+    }
+  }
+}
