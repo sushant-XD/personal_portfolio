@@ -1,50 +1,101 @@
-// components/sections/AcademicEducation.tsx
+'use client';
 
 import { getEducation } from '@/lib/portfolio-config';
+import { useScrollAnimation, useStaggeredAnimation } from '@/hooks/useScrollAnimation';
 
 export function AcademicEducation() {
   const education = getEducation();
+  const { elementRef, isVisible } = useScrollAnimation({ 
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px',
+    triggerOnce: false // Allow re-animation every time
+  });
+  const { containerRef, visibleItems } = useStaggeredAnimation(education.length, 200, false);
 
   return (
-    <section id="academic-education" className="section-padding bg-white dark:bg-gray-900">
+    <section 
+      id="academic-education" 
+      ref={elementRef}
+      className="section-padding bg-gray-50 dark:bg-gray-800"
+    >
       <div className="container-minimal">
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 transition-all duration-1000 ${
+          isVisible ? 'scroll-visible' : 'scroll-hidden'
+        }`}>
           <h2 className="section-title robotic-title">EDUCATION</h2>
         </div>
 
-        <div className="space-y-16">
+        <div ref={containerRef as any} className="space-y-16">
           {education.map((edu, index) => (
             <div
               key={edu.id}
-              className="pb-10 border-b border-gray-200 dark:border-gray-700 last:border-b-0 animate-fade-in-up"
-              style={{ animationDelay: `${index * 0.15}s` }}
+              className={`pb-10 border-b border-gray-200 dark:border-gray-600 last:border-b-0 transition-all duration-800 ${
+                visibleItems[index] ? 'stagger-visible' : 'stagger-item'
+              }`}
+              style={{ 
+                transitionDelay: `${index * 200}ms`,
+                opacity: visibleItems[index] ? 1 : 0,
+                transform: visibleItems[index] 
+                  ? 'translateY(0) translateX(0)' 
+                  : `translateY(30px) translateX(${index % 2 === 0 ? '-30px' : '30px'})`
+              }}
             >
               <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-5">
                 <div>
-                  <h3 className="text-2xl font-bold mb-1 robotic-subtitle">{edu.degree}</h3>
-                  {edu.url ? (
-                    <a 
-                      href={edu.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-lg opacity-70 hover:opacity-100 hover:underline transition-all duration-300 cursor-pointer"
-                    >
-                      {edu.school}
-                    </a>
-                  ) : (
-                    <p className="text-lg opacity-70">{edu.school}</p>
-                  )}
+                  <h3 className="text-2xl font-bold mb-1 robotic-subtitle">
+                    {edu.url ? (
+                      <a 
+                        href={edu.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+                      >
+                        {edu.degree}
+                      </a>
+                    ) : (
+                      edu.degree
+                    )}
+                  </h3>
+                  <p className="text-lg opacity-70">
+                    {edu.url ? (
+                      <a 
+                        href={edu.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+                      >
+                        {edu.school}
+                      </a>
+                    ) : (
+                      edu.school
+                    )}
+                  </p>
                 </div>
-                <p className="text-sm uppercase tracking-wider opacity-50 mt-2 md:mt-0">{edu.date}</p>
+                <p className="text-sm uppercase tracking-wider opacity-50 mt-2 md:mt-0">
+                  {edu.date}
+                </p>
               </div>
-              <ul className="text-base leading-relaxed mt-4 space-y-1">
-                {edu.description.map((bullet, bulletIndex) => (
-                  <li key={bulletIndex} className="flex items-start">
-                    <span className="text-black dark:text-white mr-3 mt-1">•</span>
-                    <span>{bullet}</span>
-                  </li>
-                ))}
-              </ul>
+              
+              {edu.description && (
+                <div className="mt-4">
+                  <ul className="space-y-2">
+                    {edu.description.map((desc, descIndex) => (
+                      <li 
+                        key={descIndex} 
+                        className="text-base leading-relaxed flex items-start"
+                        style={{
+                          opacity: visibleItems[index] ? 1 : 0,
+                          transform: visibleItems[index] ? 'translateX(0)' : 'translateX(20px)',
+                          transition: `all 0.6s ease ${(index * 200) + (descIndex * 100)}ms`
+                        }}
+                      >
+                        <span className="text-blue-600 dark:text-blue-400 mr-3 mt-1">•</span>
+                        {desc}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ))}
         </div>

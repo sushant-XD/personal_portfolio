@@ -44,9 +44,11 @@
       "company": "Wireless Lab, Mississippi State University",
       "date": "Jan 2025 - Present",
       "description": [
-        "Working on security aspects of 5G wireless communication systems",
-        "Conducting research on network vulnerability assessment and mitigation",
-        "Developing security protocols for next-generation wireless networks"
+        "Working on detecting and eliminating security vulnerabilities in 5G wireless communication systems",
+        "Collected IQ samples using USRPs, configured gNodeBs, 5G Core, and UE",
+        "Modified open source 5G software stacks to work on vulnerability assessment",
+        "Implemented caching system on 5G sniffer system improving packet processing speed by 200%",
+        "Developed an android application using Kotlin working on peer-to-peer, encrypted, distributed communication (similar to bitchat) using google nearby API following MMVM architecture"
       ],
       "url": "https://sites.google.com/view/msu-wireless/"
     },
@@ -56,10 +58,11 @@
       "company": "Agriculture Autonomy Institute, Mississippi State University",
       "date": "Sept 2024 - Present", 
       "description": [
-        "Creating immersive lighting and interactive installations for events and festivals",
-        "Specializing in real-time audio-reactive systems across the SF Bay Area",
-        "Designing permanent installations that engage audiences through technology",
-        "Managing end-to-end project delivery from concept to implementation"
+        "Worked on stopping mechanism for Power-Take-Off in Tractors to achieve sub-millisecond response time and improve safety for farmers",
+        "Designed mechanical and electrical systems in Fusion 360 and implemented super-capacitor based quick-stop mechanism",
+        "Worked on Industry-led project to automate sugarcane harvesting saving over 2 million dollars for farmers annually",
+        "Procured parts, created BOM, soldered capacitors, MOSFETs, and programmed ESP32 for controls",
+        "Implemented Control Algorithm (from Ideation to Programming and Testing) to create a leader-follower based PID control system for autonomous sugarcane harvesting vehicle"
       ],
       "url": "https://www.robots4ag.com/"
     },
@@ -69,10 +72,10 @@
       "company": "Space Foundation Nepal (Antarikchya Pratisthan Nepal)",
       "date": "June 2021 - July 2023",
       "description": [
-        "Developed embedded software for consumer electronics and IoT devices",
-        "Focused on sensor integration and real-time data processing systems",
-        "Reduced power consumption by 40% through code optimization techniques",
-        "Collaborated with hardware teams to ensure seamless software-hardware integration"
+        "Worked on 3 Nepali Satellite Projects (Slippers2Sat, PHI-1, Munal) as part of Onboard Computer developer",
+        "Implemented NuttX based Custom Flight Software for Satellite Onboard Computer, cutting down development time by 30%",
+        "Designed and tested power systems for small satellites ensuring reliable operation in space environment",
+        "Implemented novel OTA update mechanism for firmware updates in space"
       ],
       "url": "https://www.antarikchya.org.np/"
     },
@@ -82,10 +85,10 @@
       "company": "Space Foundation Nepal (Antarikchya Pratisthan Nepal)",
       "date": "July 2023 - July 2024",
       "description": [
-        "Developed embedded software for consumer electronics and IoT devices",
-        "Focused on sensor integration and real-time data processing systems",
-        "Reduced power consumption by 40% through code optimization techniques",
-        "Collaborated with hardware teams to ensure seamless software-hardware integration"
+        "Worked on Munal CubeSat project as part of Onboard Computer developer",
+        "Implemented STM32 based BareMetal Software for Satellite Onboard Computer",
+        "Tested CubeSat subsystems in thermal vacuum chamber and vibration test setup to simulate launch and space conditions",
+        "Fixed errors in existing flight software improving reliability"
       ],
       "url": "https://www.antarikchya.org.np/"
     }
@@ -97,7 +100,7 @@
     },
     {
       "name": "Software Tools", 
-      "description": "Fusion 360, KiCad, Slic3r, Cura, (neo)vim, GDB, NuttX, FreeRTOS"
+      "description": "Fusion 360, KiCad, Slic3r, Cura, (neo)vim, GDB, NuttX, FreeRTOS, Linux, Git, Docker"
     },
     {
       "name": "Hardware Skills",
@@ -107,65 +110,36 @@
   "projects": [
     {
       "id": 1,
-      "title": "Smart Garden Monitor",
-      "tech": "ESP32, LoRa, Solar Power",
-      "description": "A battery-powered IoT device that monitors soil moisture, temperature, and light levels. Features ultra-low power design with solar charging and LoRa connectivity for remote monitoring.",
-      "fullDescription": "This comprehensive IoT solution combines multiple sensors with efficient power management to create a fully autonomous garden monitoring system. The device features custom PCB design with integrated solar charging, ultra-low power microcontroller programming, and long-range wireless communication via LoRa technology. The system can operate for months without maintenance while providing real-time data to farmers and gardening enthusiasts.",
+      "title": "Game of Life with cross-language support",
+      "tech": "Python, PyGame, Cython, C, C++",
+      "description": "Conway's Game of Life implementation with performance optimizations using Cython and C/C++ extensions interacting with Python via PyBind11.",
+      "fullDescription": " Just a Hobby project I implemented to learn Cython and PyBind11. The project implements Conway's Game of Life, a cellular automaton devised by mathematician John Conway. The simulation is visualized using the PyGame library, allowing users to see the evolution of the cell grid in real-time. The core logic of the Game of Life is implemented in C++ for performance, and exposed to Python using PyBind11. Additionally, a Cython version is provided to compare performance improvements.",
       "image": "/api/placeholder/600/400",
       "features": [
-        "Ultra-low power consumption (< 1mA average)",
-        "Solar charging with battery backup",
-        "LoRa connectivity up to 10km range",
-        "Soil moisture, temperature, humidity sensors",
-        "Weather-resistant enclosure IP67 rated",
-        "Over-the-air firmware updates"
+        "C++ extension using PyBind11 for high performance computation",
+        "Tording algorithm for efficient state updates"
       ],
-      "technologies": ["ESP32-S3", "LoRa SX1276", "Solar Panel 6V", "Li-Ion Battery", "Custom PCB", "FreeRTOS"],
+      "technologies": ["Python", "Cython", "C", "C++", "PyBind11", "PyGame"],
       "links": [
-        { "label": "GitHub", "url": "https://github.com/yourusername/smart-garden" },
-        { "label": "Demo", "url": "https://smart-garden-demo.com" }
+        { "label": "GitHub", "url": "https://github.com/sushant-XD/GameOfLife" }
       ]
     },
     {
       "id": 2,
-      "title": "Audio-Reactive Light Installation",
-      "tech": "STM32, WS2812B, FFT",
-      "description": "Interactive lighting installation that responds to music in real-time. Custom PCB design with high-speed audio processing and 1000+ individually addressable LEDs.",
-      "fullDescription": "A large-scale interactive art installation featuring over 1000 individually addressable LEDs that respond to music in real-time. The system performs real-time FFT analysis to extract frequency components and creates stunning visual representations of audio. Custom hardware design ensures minimal latency and maximum visual impact for live performances and events.",
+      "title": "NOR Flash Memory Device Driver with RTOS",
+      "tech": "Embedded C, FreeRTOS, NOR Flash, STM32",
+      "description": "STM32 HAL based device driver for NOR Flash memories (MT25QL and AT25F4) with compatible with FreeRTOS and File System (LittleFS, SmartFS).",
+      "fullDescription": "A comprehensive device driver for NOR Flash memories designed to work seamlessly with FreeRTOS and popular file systems like LittleFS and SmartFS. The driver provides a high-level API for reading, writing, and managing files on NOR Flash, while ensuring efficient use of system resources and minimal latency.",
       "image": "/api/placeholder/600/400",
       "features": [
-        "Real-time FFT audio analysis at 44.1kHz",
-        "1000+ individually addressable WS2812B LEDs",
-        "Sub-10ms audio-to-visual latency",
-        "Multiple visualization modes",
-        "DMX512 compatibility for professional lighting",
-        "Web interface for real-time control"
+        "STM32 HAL based implementation",
+        "Easily portable to other microcontrollers",
+        "File System Compliant (LittleFS, SmartFS)",
+        "Thread-safe with FreeRTOS"
       ],
-      "technologies": ["STM32F4", "WS2812B LEDs", "Audio ADC", "FFT Library", "DMX512", "React Dashboard"],
+      "technologies": ["MT25QL", "AT25F4", "FreeRTOS", "STM32 HAL", "FileSystem"],
       "links": [
-        { "label": "GitHub", "url": "https://github.com/yourusername/audio-reactive-lights" },
-        { "label": "Video", "url": "https://youtube.com/watch?v=demo" }
-      ]
-    },
-    {
-      "id": 3,
-      "title": "Wireless Sensor Network",
-      "tech": "nRF52, Mesh Networking, BLE",
-      "description": "Self-healing mesh network of environmental sensors. Each node can operate independently while contributing to collective data gathering and network resilience.",
-      "fullDescription": "An advanced mesh networking solution that creates resilient networks of environmental sensors. Each node in the network can route data through neighboring nodes, creating redundancy and ensuring data reaches its destination even if individual nodes fail. The system automatically discovers optimal routing paths and adapts to changing network topology.",
-      "image": "/api/placeholder/600/400",
-      "features": [
-        "Self-healing mesh topology",
-        "Automatic node discovery and routing",
-        "End-to-end encryption",
-        "Battery life up to 2 years",
-        "Environmental sensing (temp, humidity, air quality)",
-        "Cloud integration via gateway nodes"
-      ],
-      "technologies": ["nRF52840", "Bluetooth Mesh", "Zephyr RTOS", "Nordic SDK", "Cloud APIs", "Mobile App"],
-      "links": [
-        { "label": "GitHub", "url": "https://github.com/yourusername/wireless-sensor-network" },
-        { "label": "Documentation", "url": "https://sensor-network-docs.com" }
+        { "label": "GitHub", "url": "https://github.com/yourusername/wireless-sensor-network" }
       ]
     }
   ],

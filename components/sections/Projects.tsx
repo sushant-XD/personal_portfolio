@@ -4,10 +4,17 @@ import { useState } from 'react';
 import { Modal } from '@/components/ui/Modal';
 import { getProjects } from '@/lib/portfolio-config';
 import { Project } from '@/types/portfolio';
+import { useScrollAnimation, useStaggeredAnimation } from '@/hooks/useScrollAnimation';
 
 export function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const projects = getProjects();
+  const { elementRef, isVisible } = useScrollAnimation({ 
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px',
+    triggerOnce: false // Allow re-animation every time
+  });
+  const { containerRef, visibleItems } = useStaggeredAnimation(projects.length, 150, false);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
@@ -17,20 +24,59 @@ export function Projects() {
     setSelectedProject(null);
   };
 
+  // Dynamic layout classes based on project count
+  const getGridClasses = () => {
+    const count = projects.length;
+    
+    if (count === 1) {
+      return "flex justify-center";
+    } else if (count === 2) {
+      return "grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto";
+    } else if (count === 3) {
+      return "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto";
+    } else if (count === 4) {
+      return "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-10 max-w-7xl mx-auto";
+    } else {
+      // 5+ projects: responsive grid that maintains center alignment
+      return "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center";
+    }
+  };
+
+  const getCardClasses = () => {
+    const count = projects.length;
+    const baseClasses = "card-minimal cursor-pointer";
+    
+    if (count === 1) {
+      return `${baseClasses} max-w-md w-full`;
+    }
+    return baseClasses;
+  };
+
   return (
     <>
-      <section id="projects" className="section-padding bg-white dark:bg-gray-900">
+      <section 
+        id="projects" 
+        ref={elementRef}
+        className="section-padding bg-white dark:bg-gray-900"
+      >
         <div className="container-minimal">
-          <div className="text-center mb-16">
+          <div className={`text-center mb-16 transition-all duration-1000 ${
+            isVisible ? 'scroll-visible' : 'scroll-hidden'
+          }`}>
             <h2 className="section-title robotic-title">PROJECTS</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div ref={containerRef as any} className={getGridClasses()}>
             {projects.map((project, index) => (
               <div
                 key={project.id}
-                className="card-minimal animate-fade-in-up cursor-pointer hover:shadow-lg transition-all duration-300"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`${getCardClasses()} transition-all duration-800 ${
+                  visibleItems[index] ? 'stagger-visible' : 'stagger-item'
+                }`}
+                style={{ 
+                  animationDelay: `${index * 0.15}s`,
+                  transitionDelay: visibleItems[index] ? `${index * 150}ms` : '0ms'
+                }}
                 onClick={() => openModal(project)}
               >
                 <h3 className="text-xl font-bold mb-4 robotic-subtitle">{project.title}</h3>
@@ -91,17 +137,20 @@ export function Projects() {
                 </div>
 
                 <div className="flex space-x-4">
-                  {selectedProject.links.map((link: any, index: number) => (
-                    <a
-                      key={index}
-                      href={link.url}
-                      className="btn-minimal text-xs"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {link.label}
-                    </a>
-                  ))}
+                  {selectedProject.links
+                    .filter((link: any) => link.label.toLowerCase() !== 'documentation')
+                    .map((link: any, index: number) => (
+                      <a
+                        key={index}
+                        href={link.url}
+                        className="btn-minimal text-xs"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {link.label}
+                      </a>
+                    ))
+                  }
                 </div>
               </div>
             </div>

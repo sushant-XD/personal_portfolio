@@ -1,9 +1,16 @@
 'use client';
 
 import { getSkills } from '@/lib/portfolio-config';
+import { useScrollAnimation, useStaggeredAnimation } from '@/hooks/useScrollAnimation';
 
 export function SkillsSection() {
   const skills = getSkills();
+  const { elementRef, isVisible } = useScrollAnimation({ 
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px',
+    triggerOnce: false // Allow re-animation every time
+  });
+  const { containerRef, visibleItems } = useStaggeredAnimation(skills.length, 150, false);
 
   // Dynamic grid classes based on number of skills
   const getGridClasses = (count: number) => {
@@ -18,18 +25,28 @@ export function SkillsSection() {
   };
 
   return (
-    <section id="skills" className="section-padding bg-gray-50 dark:bg-gray-800">
+    <section 
+      id="skills" 
+      ref={elementRef}
+      className="section-padding bg-gray-50 dark:bg-gray-800"
+    >
       <div className="container-minimal">
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 transition-all duration-1000 ${
+          isVisible ? 'scroll-visible' : 'scroll-hidden'
+        }`}>
           <h2 className="section-title robotic-title">SKILLS</h2>
         </div>
 
-        <div className={`${getGridClasses(skills.length)} gap-8`}>
+        <div ref={containerRef as any} className={`${getGridClasses(skills.length)} gap-8`}>
           {skills.map((skill, idx) => (
             <div
               key={skill.name}
-              className="skill-item-dynamic animate-fade-in-up"
-              style={{ animationDelay: `${idx * 0.1}s` }}
+              className={`skill-item-dynamic transition-all duration-800 ${
+                visibleItems[idx] ? 'stagger-visible' : 'stagger-item'
+              }`}
+              style={{ 
+                transitionDelay: visibleItems[idx] ? `${idx * 150}ms` : '0ms'
+              }}
             >
               <h3 className="font-bold mb-4 text-lg robotic-subtitle">{skill.name}</h3>
               <p className="text-sm opacity-70 leading-relaxed">{skill.description}</p>

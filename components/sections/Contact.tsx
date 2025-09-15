@@ -2,9 +2,15 @@
 
 import { useState } from 'react';
 import { getContact } from '@/lib/portfolio-config';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export function Contact() {
   const contact = getContact();
+  const { elementRef, isVisible } = useScrollAnimation({ 
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px',
+    triggerOnce: false // Allow re-animation every time
+  });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -49,15 +55,23 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="section-padding bg-white dark:bg-gray-900">
+    <section 
+      id="contact" 
+      ref={elementRef}
+      className="section-padding bg-white dark:bg-gray-900"
+    >
       <div className="container-minimal">
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 transition-all duration-1000 ${
+          isVisible ? 'scroll-visible' : 'scroll-hidden'
+        }`}>
           <h2 className="section-title robotic-title">CONTACT</h2>
         </div>
 
         <div className="max-w-4xl mx-auto">
           {/* Contact Info Section */}
-          <div className="text-center mb-16">
+          <div className={`text-center mb-16 transition-all duration-1000 delay-300 ${
+            isVisible ? 'scroll-visible' : 'scroll-hidden'
+          }`}>
             <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
               {contact.description}
             </p>
@@ -84,7 +98,9 @@ export function Contact() {
           </div>
 
           {/* Contact Form Section */}
-          <div className="max-w-2xl mx-auto">
+          <div className={`max-w-2xl mx-auto transition-all duration-1000 delay-500 ${
+            isVisible ? 'scroll-visible-scale' : 'scroll-hidden-scale'
+          }`}>
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold robotic-subtitle mb-4">Send a Message</h3>
               <p className="text-sm opacity-70 uppercase tracking-wider">Let's start a conversation</p>
