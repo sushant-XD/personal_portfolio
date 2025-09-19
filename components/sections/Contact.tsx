@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getContact } from '@/lib/portfolio-config';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import emailjs from '@emailjs/browser';
 
 export function Contact() {
   const contact = getContact();
@@ -19,6 +20,17 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+  // Initialize EmailJS when component mounts
+  useEffect(() => {
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    if (publicKey) {
+      emailjs.init(publicKey);
+      console.log('EmailJS initialized with public key');
+    } else {
+      console.error('EmailJS public key not found');
+    }
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -33,25 +45,64 @@ export function Contact() {
     setSubmitStatus('idle');
 
     try {
-      // For static deployment, we'll use a simple client-side solution
-      // You can replace this with EmailJS, Formspree, or another service
-      
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      console.log('Contact form submission:', formData);
-      
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', description: '' });
-      
-      // Optional: Open mailto link as fallback
-      const subject = encodeURIComponent('Portfolio Contact Message');
-      const body = encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.description}`
-      );
-      window.open(`mailto:${contact.email}?subject=${subject}&body=${body}`, '_blank');
+      // EmailJS configuration
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      // Debug: Check if environment variables are loaded
+      console.log('EmailJS Config Check:', {
+        serviceId: serviceId ? `Found: ${serviceId}` : 'Missing',
+        templateId: templateId ? `Found: ${templateId}` : 'Missing',
+        publicKey: publicKey ? `Found: ${publicKey.substring(0, 8)}...` : 'Missing'
+      });
+
+      // Validate that all required configs are present
+      if (!serviceId || !templateId || !publicKey) {
+        console.error('Missing EmailJS configuration');
+        throw new Error('EmailJS configuration missing. Please check your environment variables.');
+      }
+
+      // Validate form data
+      if (!formData.email || !formData.description) {
+        console.error('Missing required form fields');
+        throw new Error('Email and message are required');
+      }
+
+      // Prepare template parameters (using common EmailJS template field names)
+      const templateParams = {
+        user_name: formData.name || 'Anonymous',
+        user_email: formData.email,
+        message: formData.description,
+        to_name: 'Sushant', // Your name
+        from_name: formData.name || 'Anonymous',
+        from_email: formData.email,
+        reply_to: formData.email,
+      };
+
+      console.log('Sending email with params:', templateParams);
+      console.log('Using EmailJS service:', serviceId, 'template:', templateId);
+
+      // Send email using EmailJS
+      const response = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      console.log('EmailJS Response:', response);
+
+      if (response.status === 200) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', description: '' });
+        console.log('Email sent successfully!');
+      } else {
+        throw new Error(`EmailJS returned status: ${response.status}`);
+      }
       
     } catch (error) {
+      console.error('EmailJS Error Details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        error: error,
+        stack: error instanceof Error ? error.stack : 'No stack trace',
+        type: typeof error,
+        stringified: JSON.stringify(error)
+      });
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
