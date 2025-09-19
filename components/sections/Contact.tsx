@@ -33,20 +33,24 @@ export function Contact() {
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', description: '' });
-      } else {
-        setSubmitStatus('error');
-      }
+      // For static deployment, we'll use a simple client-side solution
+      // You can replace this with EmailJS, Formspree, or another service
+      
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      console.log('Contact form submission:', formData);
+      
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', description: '' });
+      
+      // Optional: Open mailto link as fallback
+      const subject = encodeURIComponent('Portfolio Contact Message');
+      const body = encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.description}`
+      );
+      window.open(`mailto:${contact.email}?subject=${subject}&body=${body}`, '_blank');
+      
     } catch (error) {
       setSubmitStatus('error');
     } finally {
