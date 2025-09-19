@@ -19,6 +19,7 @@ export function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
 
   // Initialize EmailJS when component mounts
   useEffect(() => {
@@ -37,10 +38,54 @@ export function Contact() {
       ...prev,
       [name]: value
     }));
+    
+    // Clear validation error when user starts typing
+    if (validationErrors[name]) {
+      setValidationErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const errors: {[key: string]: string} = {};
+    
+    // Validate name
+    if (!formData.name.trim()) {
+      errors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      errors.name = 'Name must be at least 2 characters long';
+    }
+    
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!emailRegex.test(formData.email.trim())) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    // Validate message
+    if (!formData.description.trim()) {
+      errors.description = 'Message is required';
+    } else if (formData.description.trim().length < 10) {
+      errors.description = 'Message must be at least 10 characters long';
+    }
+    
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form before submission
+    if (!validateForm()) {
+      console.log('Form validation failed:', validationErrors);
+      return;
+    }
+    
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -63,21 +108,15 @@ export function Contact() {
         throw new Error('EmailJS configuration missing. Please check your environment variables.');
       }
 
-      // Validate form data
-      if (!formData.email || !formData.description) {
-        console.error('Missing required form fields');
-        throw new Error('Email and message are required');
-      }
-
       // Prepare template parameters (using common EmailJS template field names)
       const templateParams = {
-        user_name: formData.name || 'Anonymous',
-        user_email: formData.email,
-        message: formData.description,
+        user_name: formData.name.trim(),
+        user_email: formData.email.trim(),
+        message: formData.description.trim(),
         to_name: 'Sushant', // Your name
-        from_name: formData.name || 'Anonymous',
-        from_email: formData.email,
-        reply_to: formData.email,
+        from_name: formData.name.trim(),
+        from_email: formData.email.trim(),
+        reply_to: formData.email.trim(),
       };
 
       console.log('Sending email with params:', templateParams);
@@ -90,7 +129,13 @@ export function Contact() {
       if (response.status === 200) {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', description: '' });
+        setValidationErrors({});
         console.log('Email sent successfully!');
+        
+        // Auto-dismiss success message after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus('idle');
+        }, 5000);
       } else {
         throw new Error(`EmailJS returned status: ${response.status}`);
       }
@@ -167,7 +212,7 @@ export function Contact() {
                   htmlFor="name" 
                   className="block text-sm font-bold uppercase tracking-wider mb-2"
                 >
-                  Name
+                  Name *
                 </label>
                 <input
                   type="text"
@@ -175,10 +220,12 @@ export function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  required
-                  className="contact-form-input"
+                  className={`contact-form-input ${validationErrors.name ? 'border-red-500 dark:border-red-400' : ''}`}
                   placeholder="Your full name"
                 />
+                {validationErrors.name && (
+                  <p className="text-red-500 text-sm mt-1">{validationErrors.name}</p>
+                )}
               </div>
 
               <div>
@@ -186,7 +233,7 @@ export function Contact() {
                   htmlFor="email" 
                   className="block text-sm font-bold uppercase tracking-wider mb-2"
                 >
-                  Email
+                  Email *
                 </label>
                 <input
                   type="email"
@@ -194,10 +241,12 @@ export function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  required
-                  className="contact-form-input"
+                  className={`contact-form-input ${validationErrors.email ? 'border-red-500 dark:border-red-400' : ''}`}
                   placeholder="your@email.com"
                 />
+                {validationErrors.email && (
+                  <p className="text-red-500 text-sm mt-1">{validationErrors.email}</p>
+                )}
               </div>
 
               <div>
@@ -205,39 +254,43 @@ export function Contact() {
                   htmlFor="description" 
                   className="block text-sm font-bold uppercase tracking-wider mb-2"
                 >
-                  Message
+                  Message *
                 </label>
                 <textarea
                   id="description"
                   name="description"
                   value={formData.description}
                   onChange={handleInputChange}
-                  required
                   rows={6}
-                  className="contact-form-input resize-none"
+                  className={`contact-form-input resize-none ${validationErrors.description ? 'border-red-500 dark:border-red-400' : ''}`}
                   placeholder="Tell me about your project or idea..."
                 />
+                {validationErrors.description && (
+                  <p className="text-red-500 text-sm mt-1">{validationErrors.description}</p>
+                )}
               </div>
 
               <div className="text-center">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-minimal w-full md:w-auto"
+                  className="btn-minimal w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </div>
 
               {submitStatus === 'success' && (
-                <div className="text-center p-4 bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 text-green-800 dark:text-green-200">
-                  Message sent successfully! I'll get back to you soon.
+                <div className="text-center p-4 bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 text-green-800 dark:text-green-200 rounded-lg transition-all duration-300">
+                  <p className="font-semibold">Message sent successfully!</p>
+                  <p className="text-sm mt-1">I'll get back to you soon.</p>
                 </div>
               )}
 
               {submitStatus === 'error' && (
-                <div className="text-center p-4 bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 text-red-800 dark:text-red-200">
-                  Something went wrong. Please try again or email me directly.
+                <div className="text-center p-4 bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 text-red-800 dark:text-red-200 rounded-lg">
+                  <p className="font-semibold">✗ Something went wrong</p>
+                  <p className="text-sm mt-1">Please try again or email me directly.</p>
                 </div>
               )}
             </form>
