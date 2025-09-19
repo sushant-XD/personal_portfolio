@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 
+// Configure for Edge Runtime (required for Cloudflare Pages)
+export const runtime = 'edge';
+
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const pathParts = url.pathname.split('/');
