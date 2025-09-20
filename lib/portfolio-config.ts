@@ -25,6 +25,10 @@ export function getProjects() {
   return getPortfolioConfig().projects;
 }
 
+export function getBlogs() {
+  return getPortfolioConfig().blogs;
+}
+
 export function getContact() {
   return getPortfolioConfig().contact;
 }

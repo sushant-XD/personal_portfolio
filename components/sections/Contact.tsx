@@ -28,7 +28,7 @@ export function Contact() {
       emailjs.init(publicKey);
       console.log('EmailJS initialized with public key');
     } else {
-      console.error('EmailJS public key not found');
+      console.warn('EmailJS public key not found. Contact form will be disabled.');
     }
   }, []);
 

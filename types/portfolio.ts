@@ -52,6 +52,18 @@ export interface Project {
   links: ProjectLink[];
 }
 
+export interface Blog {
+  id: string;
+  title: string;
+  excerpt: string;
+  content?: string;
+  date: string;
+  readTime: string;
+  tags: string[];
+  slug: string;
+  featured: boolean;
+}
+
 export interface SocialLinks {
   github?: string;
   linkedin?: string;
@@ -74,5 +86,6 @@ export interface PortfolioConfig {
   experience: Experience[];
   skills: Skill[];
   projects: Project[];
+  blogs: Blog[];
   contact: Contact;
 }

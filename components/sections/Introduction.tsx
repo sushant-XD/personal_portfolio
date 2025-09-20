@@ -1,10 +1,13 @@
 'use client';
 
-import { getPersonalInfo } from '@/lib/portfolio-config';
+import { useRouter } from 'next/navigation';
+import { getPersonalInfo, getContact } from '@/lib/portfolio-config';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export function Introduction() {
   const personalInfo = getPersonalInfo();
+  const contact = getContact();
+  const router = useRouter();
   const { elementRef, isVisible } = useScrollAnimation({ 
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px', // Trigger earlier for smoother transition
@@ -48,6 +51,39 @@ export function Introduction() {
           }`}>
             {personalInfo.bio}
           </p>
+
+          {/* Social Links */}
+          <div className={`flex justify-center items-center mb-10 transition-all duration-1000 delay-400 ${
+            isVisible ? 'scroll-visible' : 'scroll-hidden'
+          }`}>
+            {Object.entries(contact.social).map(([platform, url], index, array) => (
+              url && (
+                <div key={platform} className="flex items-center">
+                  <a 
+                    href={url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-black dark:text-white hover:opacity-50 transition-minimal text-sm uppercase tracking-wider"
+                  >
+                    {platform}
+                  </a>
+                  {(index < array.length - 1 && url && array[index + 1][1]) || index === array.length - 1 ? (
+                    <div className="w-0.5 h-4 bg-black dark:bg-white mx-6"></div>
+                  ) : null}
+                </div>
+              )
+            ))}
+            
+            {/* Blogs Link */}
+            <div className="flex items-center">
+              <button
+                onClick={() => router.push('/blogs')}
+                className="text-black dark:text-white hover:opacity-50 transition-minimal text-sm uppercase tracking-wider"
+              >
+                blog
+              </button>
+            </div>
+          </div>
 
           <button
             onClick={scrollToNext}

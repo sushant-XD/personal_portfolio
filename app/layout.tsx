@@ -18,12 +18,12 @@ const pressStart2P = Press_Start_2P({
 
 export const metadata: Metadata = {
   title: 'Sushant Dhakal - Embedded Systems Engineer',
-  description: 'Portfolio of Sushant Dhakal, Embedded Systems Engineer specializing in IoT, hardware design, and interactive installations.',
-  keywords: ['Embedded Systems', 'IoT', 'Hardware Design', 'Firmware', 'Experience Design'],
+  description: 'Portfolio of Sushant Dhakal, Embedded Systems Engineer specializing in IoT, hardware and software design, and Firmware Development',
+  keywords: ['Embedded Systems', 'IoT', 'Hardware Design', 'Firmware'],
   authors: [{ name: 'Sushant Dhakal' }],
   openGraph: {
     title: 'Sushant Dhakal - Portfolio',
-    description: 'Embedded Systems Engineer & Experience Designer',
+    description: 'Embedded Systems Engineer',
     type: 'website',
   },
 };

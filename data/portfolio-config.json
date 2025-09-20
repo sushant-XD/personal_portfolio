@@ -19,22 +19,10 @@
       "date": "2024 - 2027",
       "description": [
         "Relevant Courses: Data Structures, Digital Devices and Logic Design, Discrete Structures",
-        "GPA: 3.8/4.0",
-        "Dean's List recognition for academic excellence"
+        "Activities and Clubs: Treasurer of Nepalese Student Association, ",
+        "GPA: 4.0/4.0"
       ],
       "url": "https://www.ece.msstate.edu/"
-    },
-    {
-      "id": "2",
-      "degree": "High School Diploma in Science",
-      "school": "Kathmandu University High School",
-      "date": "2021 - 2023",
-      "description": [
-        "Relevant Courses: C programming, Physics, Calculus",
-        "Graduated with High Honors",
-        "President of Computer Science Club"
-      ],
-      "url": "https://www.kuhs.edu.np/"
     }
   ],
   "experience": [
@@ -141,6 +129,48 @@
       "links": [
         { "label": "GitHub", "url": "https://github.com/yourusername/wireless-sensor-network" }
       ]
+    }
+  ],
+  "blogs": [
+    {
+      "id": "1",
+      "title": "Getting Started with Embedded Systems Programming",
+      "excerpt": "A comprehensive guide to understanding the fundamentals of embedded systems development, from basic concepts to practical applications.",
+      "date": "2024-12-15",
+      "readTime": "8 min read",
+      "tags": ["Embedded Systems", "Programming", "Hardware"],
+      "slug": "getting-started-embedded-systems",
+      "featured": true
+    },
+    {
+      "id": "2", 
+      "title": "Building IoT Solutions: From Prototype to Production",
+      "excerpt": "Learn how to take your IoT project from initial concept to a production-ready solution, covering hardware design, firmware, and cloud integration.",
+      "date": "2024-11-28",
+      "readTime": "12 min read",
+      "tags": ["IoT", "Cloud", "Product Development"],
+      "slug": "iot-prototype-to-production",
+      "featured": true
+    },
+    {
+      "id": "3",
+      "title": "Understanding 5G Security Vulnerabilities",
+      "excerpt": "An in-depth analysis of security challenges in 5G networks and methods for detection and mitigation of potential vulnerabilities.",
+      "date": "2024-11-10",
+      "readTime": "15 min read", 
+      "tags": ["5G", "Security", "Wireless"],
+      "slug": "5g-security-vulnerabilities",
+      "featured": false
+    },
+    {
+      "id": "4",
+      "title": "Optimizing USRP Performance for Real-time Applications",
+      "excerpt": "Tips and techniques for maximizing USRP performance in software-defined radio applications and real-time signal processing.",
+      "date": "2024-10-22",
+      "readTime": "10 min read",
+      "tags": ["USRP", "SDR", "Real-time"],
+      "slug": "optimizing-usrp-performance",
+      "featured": false
     }
   ],
   "contact": {
