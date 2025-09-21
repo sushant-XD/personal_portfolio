@@ -15,7 +15,7 @@ export function Introduction() {
   });
   
   const scrollToNext = () => {
-    const nextSection = document.getElementById('academic-education');
+    const nextSection = document.getElementById('experience');
     if (nextSection) {
       // Add a small delay to make the transition feel more intentional
       setTimeout(() => {
@@ -77,7 +77,7 @@ export function Introduction() {
             {/* Blogs Link */}
             <div className="flex items-center">
               <button
-                onClick={() => router.push('/blogs')}
+                onClick={() => window.open('/blogs', '_blank')}
                 className="text-black dark:text-white hover:opacity-50 transition-minimal text-sm uppercase tracking-wider"
               >
                 blog

@@ -48,7 +48,12 @@ export function Header() {
 
   const handleNavigation = (item: { name: string; id?: string; route?: string }) => {
     if (item.route) {
-      router.push(item.route);
+      // Open blog route in new tab
+      if (item.route === '/blogs') {
+        window.open(item.route, '_blank');
+      } else {
+        router.push(item.route);
+      }
     } else if (item.id) {
       scrollToSection(item.id);
     }
