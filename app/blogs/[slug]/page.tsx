@@ -3,14 +3,15 @@ import { getBlogs } from "@/lib/portfolio-config";
 import { notFound } from "next/navigation";
 
 interface BlogPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export default function BlogPage({ params }: BlogPageProps) {
+export default async function BlogPage({ params }: BlogPageProps) {
+  const { slug } = await params;
   const blogs = getBlogs();
-  const blog = blogs.find(b => b.slug === params.slug);
+  const blog = blogs.find(b => b.slug === slug);
 
   if (!blog) {
     notFound();
