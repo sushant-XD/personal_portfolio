@@ -2,14 +2,15 @@ import { BlogPost } from "@/components/sections/BlogPost";
 import { getBlogs } from "@/lib/portfolio-config";
 import { notFound } from "next/navigation";
 
+type Params = Promise<{ slug: string }>;
+
 interface BlogPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
+  params: Params;
 }
 
-export default async function BlogPage({ params }: BlogPageProps) {
-  const { slug } = await params;
+export default async function BlogPage(props: BlogPageProps) {
+  const params = await props.params;
+  const { slug } = params;
   const blogs = getBlogs();
   const blog = blogs.find(b => b.slug === slug);
 
